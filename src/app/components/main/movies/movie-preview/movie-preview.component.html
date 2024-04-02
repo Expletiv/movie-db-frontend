@@ -1,0 +1,55 @@
+<div class="card my-auto" (click)="getMovieDetails()" *ngIf="movie" #card [class.in-viewport]="isScrolledIntoView">
+  <img id="poster" class="card-img rounded mx-auto position-relative" *ngIf="movie.poster_path != null"
+       [ngSrc]="environment.tmdbImagePath + movie.poster_path" [alt]="movie.title + ' Poster'" fill>
+  <svg class="card-img rounded mx-auto" viewBox="0 0 254.4 377.017"
+       xmlns="http://www.w3.org/2000/svg" *ngIf="movie.poster_path == null">
+    <rect width="100%" height="100%" fill="grey"/>
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#333">{{ movie.title }}</text>
+  </svg>
+  <div class="card-img-overlay" id="card-rating">
+    <div class="d-flex d-inline">
+      <div class="bg-dark">
+        <img class="me-2" ngSrc="assets/tmdb-icon.svg" id="tmdb-icon" height="25" width="50">
+        <span [style.color]="ratingToHsl(movie.vote_average)">{{ movie.vote_average | number: '1.1-1'}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-img-overlay text-light" id="card-description">
+    <h5 class="card-title text-truncate">{{ movie.title }}</h5>
+    <p class="card-text overflow-scroll h-50">{{ movie.overview }}</p>
+    <p class="card-text">
+      <small class="text-white-50">Erscheinungsdatum: {{ movie.release_date | date: 'dd. MM. YYYY' }}</small>
+    </p>
+    <div class="row" *ngIf="movie.watchlistData">
+      <p class="col-auto card-text my-auto">
+        <small class="text-white-50">Hinzugefügt von </small>
+      </p>
+      <div class="col-2">
+        <mgt-person class="person" [attr.user-id]="movie.watchlistData.addedBy" view="image" avatar-size="small"
+                    [attr.person-card]="personCardExpand" (click)="$event.stopPropagation()">
+        </mgt-person>
+      </div>
+    </div>
+    <div class="d-flex flex-column mt-2">
+      <button class="btn btn-primary mb-2 px-0" type="button" *ngIf="!movie.watchlistData"
+              (click)="addToWatchlist($event)"
+              [disabled]="isProcessingRequest">
+        Zur Watchlist hinzufügen
+        <ng-container *ngIf="isProcessingRequest">
+          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+          <span class="visually-hidden" role="status">Loading...</span>
+        </ng-container>
+      </button>
+      <button class="btn btn-danger mb-2" type="button"
+              *ngIf="movie.watchlistData && auth.hasValidAccessToken() &&
+               movie.watchlistData.addedBy == auth.getIdentityClaims()['oid']"
+              (click)="deleteFromWatchlist($event)" [disabled]="isProcessingRequest">
+        Entferne von Watchlist
+        <ng-container *ngIf="isProcessingRequest">
+          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+          <span class="visually-hidden" role="status">Loading...</span>
+        </ng-container>
+      </button>
+    </div>
+  </div>
+</div>

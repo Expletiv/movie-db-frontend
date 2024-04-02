@@ -1,0 +1,5 @@
+<div class="mt-5 mb-5">
+  <h2 class="h3">Suchbegriff: <span class="fst-italic">{{ query }}</span></h2>
+  <h3 class="h4 text-body-secondary">Ergebnisse: {{ moviePreviews?.movies?.total_results }}</h3>
+  <app-movie-previews-container [fetchMovies]="fetchMovies"></app-movie-previews-container>
+</div>

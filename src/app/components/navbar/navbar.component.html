@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-xxl bg-body bg-gradient" [class.bg-body-secondary]="theme == 'light'">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/"><i class="bi bi-film"></i> Movie-Database</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target=".offcanvas"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title"><i class="bi bi-film"></i> Movie-Database</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav w-100 mb-2 mb-xxl-0">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/popular" routerLinkActive="active">
+              Beliebt
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/discover" routerLinkActive="active">
+              Entdecken
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/top" routerLinkActive="active">
+              Höchste Bewertung
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/watchlist" routerLinkActive="active">
+              Watchlist
+            </a>
+          </li>
+          <hr class="d-xxl-none">
+          <div class="nav-item d-flex mx-xxl-auto my-auto">
+            <mgt-search-box placeholder="Suchen" class="w-100"></mgt-search-box>
+          </div>
+          <hr class="d-xxl-none">
+          <div class="d-flex">
+            <div class="my-auto order-xxl-last me-3" *ngIf="!auth.hasValidAccessToken()">
+              <button class="btn btn-sm btn-outline-primary" routerLink="/registration">Registrieren</button>
+            </div>
+            <div class="order-xxl-last my-auto">
+              <mgt-login login-view="avatar"></mgt-login>
+            </div>
+            <div class="form-check form-switch ms-auto me-xxl-5 my-auto">
+              <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch" (click)="toggleTheme()"
+                     aria-label="theme switch" [checked]="theme == 'dark'">
+              <label class="form-check-label" for="themeSwitch"><i class="bi bi-moon-stars-fill"></i></label>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

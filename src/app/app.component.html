@@ -1,0 +1,14 @@
+<div>
+  <header class="sticky-top">
+    <div class="progress fixed-top bg-transparent" role="progressbar" aria-label="Progress bar"
+         aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar" [@loading]="loadingPercentage" (@loading.done)="loadingPercentage = '0'"></div>
+    </div>
+    <app-navbar></app-navbar>
+  </header>
+  <main class="container">
+    <router-outlet/>
+    <app-toast></app-toast>
+  </main>
+</div>
+

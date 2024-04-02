@@ -1,0 +1,27 @@
+<div class="mt-5" [formGroup]="formGroup">
+  <p>Wenn du das Formular abschickst, erstellt der Server einen Account für dich. Danach kannst du dich mit der
+    eingegeben E-Mail deines Microsoft-Accounts einloggen.</p>
+  <p>Die Bearbeitung des Servers kann bis zu 30 Sekunden dauern. Bitte habe Geduld.</p>
+  <div class="row mt-5">
+    <label class="my-auto" for="email">E-Mail-Adresse deines Microsoft-Accounts</label>
+    <div class="col-sm-10 mt-2">
+      <input class="form-control" id="email" type="email" placeholder="E-Mail" formControlName="userEmail" email
+             [class.is-invalid]="formGroup.get('userEmail')?.invalid  && formGroup.get('userEmail')?.touched">
+
+    </div>
+  </div>
+  <div class="row mt-3">
+    <label class="my-auto" for="email">Benutzername</label>
+    <div class="col-sm-10 mt-2">
+      <input class="form-control" id="username" type="text" placeholder="Benutzername" formControlName="userDisplayName"
+             [class.is-invalid]="formGroup.get('userDisplayName')?.invalid  && formGroup.get('userDisplayName')?.touched">
+
+    </div>
+  </div>
+  <button class="btn btn-primary mt-4" type="button" (click)="sendRegistration()" [disabled]="isProcessingRegistration">Abschicken
+    <ng-container *ngIf="isProcessingRegistration">
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span class="visually-hidden" role="status" >Loading...</span>
+    </ng-container>
+  </button>
+</div>

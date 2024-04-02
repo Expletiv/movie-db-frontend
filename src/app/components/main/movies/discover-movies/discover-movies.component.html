@@ -1,0 +1,20 @@
+<div class="mt-5 mb-5">
+  <div class="d-flex flex-wrap mb-3">
+    <select class="form-select me-3 mb-2 w-auto" aria-label="Select sorting" (change)="changeSorting()" #selectCategory>
+      <option value="vote_count" selected>Anzahl Bewertungen</option>
+      <option value="popularity">Beliebtheit</option>
+      <option value="vote_average">Durchschnittliche Bewertung</option>
+      <option value="release_date">Erscheinungsdatum</option>
+      <option value="title">Titel</option>
+      <option value="revenue">Einnahmen</option>
+    </select>
+    <select class="form-select me-3 mb-2 w-auto" aria-label="Select direction" (change)="changeSorting()" #selectDirection>
+      <option value=".desc" selected>Absteigend</option>
+      <option value=".asc">Aufsteigend</option>
+    </select>
+    <div class="mb-2" (input)="changeSorting()">
+      <input class="form-control" type="number" placeholder="Erscheinungsjahr" #year>
+    </div>
+  </div>
+  <app-movie-previews-container [fetchMovies]="fetchMovies"></app-movie-previews-container>
+</div>

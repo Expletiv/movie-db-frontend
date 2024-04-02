@@ -1,0 +1,96 @@
+<div id="image-backdrop" class="">
+  <img class="object-fit-cover position-fixed z-n1" [ngSrc]="environment.tmdbImagePath + backdropPath" fill
+       alt="backdrop movie image">
+</div>
+<div class="position-relative z-0">
+  <div class="row mt-5">
+    <div class="col-md-4">
+      <img class="object-fit-lg-scale object-fit-cover rounded position-relative p-5 p-md-0"
+           *ngIf="posterPath != null"
+           [ngSrc]="environment.tmdbImagePath + posterPath"
+           [alt]="title + ' Poster'" fill priority>
+      <svg class="rounded" viewBox="0 0 254.4 377.017" xmlns="http://www.w3.org/2000/svg"
+           *ngIf="posterPath == null">
+        <rect width="100%" height="100%" fill="grey"/>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#333">
+          Bild nicht gefunden
+        </text>
+      </svg>
+    </div>
+    <div class="col-md-8 mt-2 my-md-auto d-flex flex-column placeholder-glow">
+      <div class="bg-body-tertiary rounded bg-opacity-75 p-2">
+        <h2>{{ title }}<span class="placeholder col-8 placeholder-lg"></span></h2>
+        <blockquote class="blockquote text-body-secondary fst-italic">{{ tagline }} <span
+          class="placeholder col-8 placeholder-sm"></span></blockquote>
+        <p> {{ overview }}
+          <span class="placeholder col-12"></span>
+          <span class="placeholder col-12"></span>
+          <span class="placeholder col-12"></span>
+        </p>
+      </div>
+      <div class="d-flex mt-2">
+        <h5><span class="badge rounded-pill bg-body-secondary text-body me-2"
+                  *ngFor="let category of genres">{{ category.name }}</span>
+          <span class="badge rounded-pill placeholder me-2 mt-2">placeholder</span>
+          <span class="badge rounded-pill placeholder me-2 mt-2">placeholder</span>
+          <span class="badge rounded-pill placeholder me-2 mt-2">placeholder</span>
+        </h5>
+      </div>
+      <table class="table table-hover table-sm table-borderless table-striped rounded overflow-hidden mt-2">
+        <tbody>
+        <tr>
+          <td>Dauer</td>
+          <td>{{ runtime }} Minuten</td>
+        </tr>
+        <tr>
+          <td>Erscheinungsdatum</td>
+          <td>{{ releaseDate | date: 'dd. MM. YYYY' }}</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>{{ status }}</td>
+        </tr>
+        <tr>
+          <td>Budget</td>
+          <td>$ {{ budget | number }}</td>
+        </tr>
+        <tr>
+          <td>Einnahmen</td>
+          <td>$ {{ revenue | number }}</td>
+        </tr>
+        <tr>
+          <td>Tmdb-ID</td>
+          <td>{{ id }}</td>
+        </tr>
+        <tr>
+          <td>Imdb-ID</td>
+          <td>{{ imdbId }}</td>
+        </tr>
+        <tr>
+          <td>Tmdb-Bewertung</td>
+          <td><span class="bg-dark" [style.color]="ratingToHsl(tmdbRating!)">{{ tmdbRating | number: '1.1-1' }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Anzahl Bewertungen</td>
+          <td>{{ tmdbRatingsCount }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row mt-3 mx-1">
+    <h4 class="w-auto bg-body-secondary bg-opacity-75 rounded p-2">Mit Abonnement kostenlos streamen bei:</h4>
+    <div class="d-flex" *ngIf="watchProviders && watchProviders.results.DE">
+      <img *ngFor="let flatrate of watchProviders.results.DE.flatrate" class="rounded me-1"
+           [ngSrc]="environment.tmdbImagePath + flatrate.logo_path" width="65" height="65"
+           [alt]="flatrate.provider_name + 'streaming now'">
+    </div>
+  </div>
+  <div class="mt-5 mb-5">
+    <div class="d-flex">
+      <h3 class="bg-body-secondary bg-opacity-75 rounded p-2">Ähnliche Filme</h3>
+    </div>
+    <app-movie-previews-container [fetchMovies]="fetchRecommendedMovies"></app-movie-previews-container>
+  </div>
+</div>
